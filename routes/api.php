@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CommentsController;
+use App\Http\Controllers\Api\FilesController;
 use App\Http\Controllers\Api\PostsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +22,8 @@ Route::post('/authenticate', [AuthController::class, 'login']);
 // Posts
 Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('/posts', PostsController::class);
+    Route::apiResource('/comments', CommentsController::class);
+    Route::post('/uploads', [FilesController::class, 'store']);
 });
 // Get user
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

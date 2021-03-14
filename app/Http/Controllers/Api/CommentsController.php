@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostRequest;
+use App\Http\Requests\CommentRequest;
 
-class PostsController extends Controller
+class CommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::withCount('comments')
-            ->paginate();
-        return $posts;
+        //
     }
 
     /**
@@ -27,10 +25,10 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(CommentRequest $request)
     {
-        $post = auth()->user()->posts()->create($request->all());
-        return $post;
+        $comment = Comment::create($request->all());
+        return $comment;
     }
 
     /**
@@ -39,10 +37,9 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        $comments = $post->comments;
-        return $post;
+        //
     }
 
     /**
@@ -52,11 +49,10 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(CommentRequest $request, Comment $comment)
     {
-        $this->authorize('update', $post);
-        $post->update($request->all());
-        return $post;
+        $comment->update($request->all());
+        return $comment;
     }
 
     /**
@@ -65,10 +61,10 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Comment $comment)
     {
-        $this->authorize('delete', $post);
-        $post->delete();
+        $this->authorize('delete', $comment);
+        $comment->delete();
         return ['status' => 'Deleted.'];
     }
 }
