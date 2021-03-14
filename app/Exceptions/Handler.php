@@ -38,4 +38,44 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $e)
+    {
+        if ($request->is('api*')) {
+
+            if ($e instanceof \Illuminate\Validation\ValidationException) {
+                return response([
+                    'status' => 'error',
+                    'errors' => $e->errors()
+                ], 422);
+            }
+
+            if ($e instanceof \Illuminate\Auth\Access\AuthorizationException) {
+                return response([
+                    'status' => 'error',
+                    'error' => $e->getMessage()
+                ], 403);
+            }
+
+            if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException || $e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+                return response([
+                    'status' => 'error',
+                    'error' => 'Page not found.'
+                ], 404);
+            }
+
+            if ($e instanceof \Symfony\Component\Routing\Exception\RouteNotFoundException) {
+                return response([
+                    'status' => 'error',
+                    'error' => 'Unauthenticated.'
+                ], 401);
+            }
+            
+            return response(['status' => 'error', 'error' => 'Something went wrong.'], 500);
+
+        }
+
+        parent::render($request, $e);
+
+    }
 }
