@@ -12,12 +12,12 @@
           <div class="rounded-md shadow-sm -space-y-px">
             <div class="mb-6">
               <label for="email-address" class="sr-only">Email address</label>
-              <input v-model="email" name="email" type="email" autocomplete="off" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+              <input v-model="email" name="email" type="text" autocomplete="off" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
             </div>
             <div class="mb-6">
               <label for="password" class="sr-only">Password</label>
               <input v-model="password" name="password" type="password" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
-              <p class="text-red-500 text-sm italic hidden">Please choose a password</p>
+              <p v-if="errorMessage" class="text-red-500 text-sm italic">{{ errorMessage }}</p>
             </div>
           </div>
           <div class="mt-6">
@@ -35,6 +35,8 @@
 <script>
 import AppHeader from '../partials/Header'
 import AppFooter from '../partials/Footer'
+import { mapGetters } from 'vuex'
+
 export default {
   components: {
     AppHeader,
@@ -44,15 +46,30 @@ export default {
     return {
       email: '',
       password: '',
+      errorMessage: '',
     }
   },
+  computed:{
+    ...mapGetters([
+      'authenticated'
+    ])
+  },
   methods: {
-    signIn(){
-      axios.get('/sanctum/csrf-cookie').then(response => {
-          axios.post('/api/authenticate', { email: this.email, password: this.password })
-            .then(res => this.$router.push({ name: 'Dashboard' }))
-            .catch(err => console.log(err))
-      })
+    async signIn(){
+
+      this.errorMessage = ''
+      try {
+        await this.$store.dispatch('loginUser', { email: this.email, password: this.password })
+        this.$router.push({ name: 'Dashboard' })
+      } catch (e) {
+        this.errorMessage = e
+      }
+
+    }
+  },
+  mounted(){
+    if(this.authenticated){
+      this.$router.push({ name: 'Dashboard' })
     }
   }
 }
