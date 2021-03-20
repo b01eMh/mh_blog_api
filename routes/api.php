@@ -21,8 +21,9 @@ use App\Http\Controllers\Api\CommentsController;
 // Authenticate
 Route::post('/authenticate', [AuthController::class, 'login']);
 // Posts
+Route::get('/posts', [PostsController::class, 'index'])->name('posts');
 Route::middleware('auth:sanctum')->group(function(){
-    Route::apiResource('/posts', PostsController::class);
+    Route::apiResource('/posts', PostsController::class)->except('index');
     Route::apiResource('/comments', CommentsController::class);
     Route::post('/uploads', [FilesController::class, 'store']);
 });

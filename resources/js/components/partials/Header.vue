@@ -8,9 +8,6 @@
         <li v-if="authenticated">
           <router-link :to="{name: 'Dashboard'}" class="text-gray-700 text-lg hover:text-white">Dashboard</router-link>
         </li>
-        <li v-if="authenticated">
-          <router-link :to="{name: 'Home'}" class="text-gray-700 text-lg hover:text-white">Posts</router-link>
-        </li>
         <li v-if="!authenticated">
           <router-link :to="{name: 'Login'}" class="text-gray-700 text-lg hover:text-white">Login</router-link>
         </li>

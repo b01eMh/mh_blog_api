@@ -17,7 +17,7 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::withCount('comments')
-            ->paginate();
+            ->paginate(5);
         return $posts;
     }
 

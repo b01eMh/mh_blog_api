@@ -1,35 +1,16 @@
 <template>
   <div>
-    <div>
       <app-header></app-header>
-    </div>
     <div class="container mx-auto h-screen flex">
-      <div class="pt-6 w-3/12">
-        <ul class="flex-col space-y-8 mt-6 w-full text-center">
-          <li class="mt-6">
-            <a href="#" class="text-blue-800 text-lg inline-block w-3/4 rounded-md py-2 hover:bg-purple-500 hover:text-white">Dashboard</a>
-          </li>
-          <li>
-            <a href="#" class="text-blue-800 text-lg inline-block w-3/4 rounded-md py-2 hover:bg-purple-500 hover:text-white">User Profile</a>
-          </li>
-          <li>
-            <a href="#" class="text-blue-800 text-lg inline-block w-3/4 rounded-md py-2 hover:bg-purple-500 hover:text-white">Categories</a>
-          </li>
-          <li>
-            <a href="#" class="text-blue-800 text-lg inline-block w-3/4 rounded-md py-2 hover:bg-purple-500 hover:text-white">Posts</a>
-          </li>
-          <li>
-            <a href="#" class="text-blue-800 text-lg inline-block w-3/4 rounded-md py-2 hover:bg-purple-500 hover:text-white">Comments</a>
-          </li>
-        </ul>
-      </div>
+      <dash-menu></dash-menu>
       <div class="w-9/12">
-        <div>
-          <h1 class="text-4xl font-semibold text-gray-800 p-8">Dashboard</h1>
+        <div class="bg-gray-100 p-8">
+          <h1 class="text-4xl font-semibold text-gray-800">Dashboard</h1>
         </div>
-        <div>
-          main content in right side
-          {{ user }}
+        <div class="mt-4 px-6">
+          <h1 class="text-lg">Hello, <span class="font-semibold text-gray-800">{{ user.name }}</span>, welcome to dashboard</h1>
+          <p class="mt-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, facilis omnis! Reprehenderit tempore architecto nobis perferendis quae atque inventore fugit id vel! Accusantium, sapiente. Minus ad adipisci magni eligendi officiis!</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, facilis omnis! Reprehenderit tempore architecto nobis perferendis quae atque inventore fugit id vel! Accusantium, sapiente. Minus ad adipisci magni eligendi officiis!</p>
         </div>
       </div>
     </div>
@@ -38,11 +19,13 @@
 
 <script>
 import AppHeader from '../partials/Header'
+import DashMenu from '../partials/dashMenu'
 import { mapGetters } from 'vuex'
 
 export default {
   components:{
-    AppHeader
+    AppHeader,
+    DashMenu
   },
   computed: {
     ...mapGetters([
