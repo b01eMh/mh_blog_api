@@ -17,7 +17,16 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::withCount('comments')
-            ->paginate(5);
+            ->orderBy('created_at', 'DESC')
+            ->paginate();
+        return $posts;
+    }
+
+    public function userPosts()
+    {
+        $posts = Post::where('user_id', auth()->user()->id)
+            ->withCount('comments')
+            ->paginate();
         return $posts;
     }
 

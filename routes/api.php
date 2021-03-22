@@ -24,6 +24,7 @@ Route::post('/authenticate', [AuthController::class, 'login']);
 Route::get('/posts', [PostsController::class, 'index'])->name('posts');
 Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('/posts', PostsController::class)->except('index');
+    Route::get('/user-posts', [PostsController::class, 'userPosts']);
     Route::apiResource('/comments', CommentsController::class);
     Route::post('/uploads', [FilesController::class, 'store']);
 });

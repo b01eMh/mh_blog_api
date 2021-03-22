@@ -4,30 +4,26 @@
     <div class="container mx-auto h-screen flex">
       <dash-menu></dash-menu>
       <div class="w-9/12">
-        <div class="bg-gray-100 p-8">
+        <div class="flex justify-between bg-gray-100 p-8">
           <h1 class="text-4xl font-semibold text-gray-800">Posts</h1>
+          <button @click="showForm = !showForm" class="bg-indigo-400 rounded text-white px-3 py-2 mr-2 hover:bg-indigo-700">Add New Post</button>
         </div>
         <div>
-          <table class="table-auto border">
+          <div v-if="showForm">
+            <add-form @cancel-form="showForm = false" @post-added="fetchPosts"></add-form>
+          </div>
+          <table class="table-auto border w-full">
             <thead>
               <tr>
                 <th class="border px-4 py-2">#</th>
                 <th class="border px-4 py-2">Title</th>
                 <th class="border px-4 py-2">Body</th>
-                <th class="border px-4 py-2">Image</th>
                 <th class="border px-4 py-2">Comments</th>
                 <th class="border px-4 py-2">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="post in posts" :key="post.id" class="border">
-                <td class="text-center border">{{post.id}}</td>
-                <td class="border">{{post.title}}</td>
-                <td class="border">{{post.body}}</td>
-                <td class="border">dummy img</td>
-                <td class="border">{{post.comments_count}}</td>
-                <td class="border">random action</td>
-              </tr>
+              <post-item v-for="post in posts" :key="post.id" :post="post" @post-deleted="fetchPosts" class="border"></post-item>
             </tbody>
           </table>
         </div>
@@ -39,24 +35,36 @@
 <script>
 import AppHeader from '../partials/Header'
 import DashMenu from '../partials/dashMenu'
+import PostItem from './PostItem'
+import AddForm from '../posts/AddForm'
 
 export default {
   components: {
     AppHeader,
-    DashMenu
+    DashMenu,
+    PostItem,
+    AddForm
   },
 
   data(){
     return{
-      posts: []
+      posts: [],
+      showForm : false,
+    }
+  },
+
+  methods: {
+    fetchPosts(){
+      this.showForm = false
+      axios.get('/api/user-posts')
+        .then(res => {
+          this.posts = res.data.data
+        })
     }
   },
 
   mounted(){
-    axios.get('/api/posts')
-      .then(res => {
-        this.posts = res.data.data
-      })
+    this.fetchPosts()
   }
 
 }
