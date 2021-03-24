@@ -5,6 +5,7 @@ import Dashboard from '../components/dashboard/Dashboard.vue'
 import Posts from '../components/posts/Posts.vue'
 import DashPosts from '../components/dashboard/DashPosts'
 import PostDetail from '../components/posts/PostDetail'
+import Register from '../components/auth/Register'
 import store from '../store'
 
 const router = createRouter({
@@ -12,6 +13,7 @@ const router = createRouter({
   routes: [
     { path: '/', component: Posts, name: 'Home' },
     { path: '/login', component: Login, name: 'Login' },
+    { path: '/register', component: Register, name: 'Register' },
     { path: '/dashboard', component: Dashboard, name: 'Dashboard', meta: { reqAuth: true } },
     { path: '/dashboard/posts', component: DashPosts, name: 'DashPosts', meta: { reqAuth: true } },
     { path: '/posts/:id', component: PostDetail, name: 'PostDetail', meta: { reqAuth: true }, props: true },

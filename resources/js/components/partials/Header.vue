@@ -11,6 +11,9 @@
         <li v-if="!authenticated">
           <router-link :to="{name: 'Login'}" class="text-gray-700 text-lg hover:text-white">Login</router-link>
         </li>
+        <li v-if="!authenticated">
+          <router-link :to="{name: 'Register'}" class="text-gray-700 text-lg hover:text-white">Register</router-link>
+        </li>
         <li v-if="authenticated" class="pr-6">
           <a href="#" @click="signOut()" class="text-gray-700 text-lg hover:text-white">Logout</a>
         </li>

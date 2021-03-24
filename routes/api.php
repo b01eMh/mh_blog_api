@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FilesController;
 use App\Http\Controllers\Api\PostsController;
 use App\Http\Controllers\Api\CommentsController;
+use App\Http\Controllers\Api\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,8 @@ use App\Http\Controllers\Api\CommentsController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+// Register
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 // Authenticate
 Route::post('/authenticate', [AuthController::class, 'login']);
 // Posts

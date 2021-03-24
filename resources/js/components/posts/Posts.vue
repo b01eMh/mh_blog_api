@@ -2,8 +2,8 @@
   <div>
     <app-header></app-header>
     <main class="min-h-screen flex flex-grow">
-      <div class="container mx-auto flex space-y-4 my-4">
-	      <div v-if="posts.length > 0" class="flex-col space-y-4">
+      <div class="container mx-auto flex justify-center space-y-4 my-4">
+	      <div v-if="posts.length > 0" class="flex-col w-3/4 space-y-4">
           <div v-for="post in posts" :key="post.id" class="border shadow-md pb-4">
             <img src="http://placehold.it/750x300" alt="Post image" />
             <h1 class="text-3xl font-semibold my-4 pl-4">{{ post.title }}</h1>
